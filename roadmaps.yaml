@@ -1,3 +1,6 @@
-example:
+roadmapper:
+  repos:
+    - afirth/roadmapper
+stoneboard:
   repos:
     - plan3/stoneboard
