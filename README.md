@@ -25,9 +25,11 @@ Run this script to get a `dot` and `svg`
 # Roadmaps
 ## Roadmapper
 > This repo
+
 ![roadmapper](output/roadmapper.svg)
 ## Stoneboard
 > Has a different structure for noting dependencies, therefore no lines
+
 ![Stoneboard](output/stoneboard.svg)
 
 # Prior Art
