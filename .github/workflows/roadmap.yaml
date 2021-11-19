@@ -45,6 +45,8 @@ jobs:
       #             start the party
       #----------------------------------------------
       - name: Run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           source .venv/bin/activate
           make run
