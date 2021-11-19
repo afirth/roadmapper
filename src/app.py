@@ -155,7 +155,6 @@ def dot_to_svg(dot_file, svg_file):
     except Exception as e:
         print("Couldn't run dot: {}".format(e))
         print("Is graphviz installed?")
-        print(dot)
 
 def main():
     for roadmap_name, roadmap in get_roadmaps(options.config):
