@@ -17,5 +17,14 @@ build:
 run:
 	docker run -it --rm \
 		-e GITHUB_TOKEN \
+		-v ${PWD}/roadmaps.yaml:/app/roadmaps.yaml \
 		$(tag) \
 		app.py --owner=FATMAP --repo=aws-dns-zones
+
+.PHONY: bash
+bash:
+	docker run -it --rm \
+		-e GITHUB_TOKEN \
+		-v ${PWD}/roadmaps.yaml:/app/roadmaps.yaml \
+		$(tag) \
+		--entrypoint = /bin/bash

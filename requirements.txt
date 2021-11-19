@@ -1,3 +1,5 @@
+configargparse
+jinja2
+pyyaml
 requests
 simplejson
-configargparse
