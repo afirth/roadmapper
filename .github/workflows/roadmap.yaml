@@ -44,17 +44,17 @@ jobs:
       #----------------------------------------------
       #             start the party
       #----------------------------------------------
+
+      # install graphviz
+      - name: Install graphviz
+        run: |
+          sudo apt-get install graphviz
       - name: Run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           source .venv/bin/activate
           make run
-
-      # install graphviz
-      - name: Install graphviz
-        run: |
-          sudo apt-get install graphviz
 
       # commit back to master
       - uses: stefanzweifel/git-auto-commit-action@v4
