@@ -109,6 +109,8 @@ def add_milestones(milestones, data, repository):
         # put a skeleton milestone in the map for each parent if not already there
         parents = []
         if milestone['description'] is not None:
+            # regex for parent detection e.g. "/depends org/repo/1"
+            parent_rex = re.compile( '^/depends ([\S]+)', re.MULTILINE)
             for item in parent_rex.findall(milestone['description']):
                 parent_id = item.lower()
                 parent = {
@@ -186,6 +188,4 @@ def main():
         dot_to_svg(dot_file, svg_file)
 
 if __name__ == '__main__':
-# regex for parent detection e.g. "/depends org/repo/1"
-    parent_rex = re.compile( '^/depends ([\S]+)$', re.MULTILINE)
     main()
