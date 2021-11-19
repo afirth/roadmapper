@@ -6,7 +6,7 @@ import yaml
 from jinja2 import Template
 
 parser = configargparse.ArgumentParser(description="Make roadmaps out of github milestones")
-parser.add_argument('--config', required=True, help='path to config file', env_var='config') #TODO implement
+parser.add_argument('--config', required=True, help='path to config file', env_var='config')
 parser.add_argument('--token', required=True, help='github token that can query repo', env_var='GITHUB_TOKEN')
 options = parser.parse_args()
 
