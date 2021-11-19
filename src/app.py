@@ -6,8 +6,7 @@ import yaml
 from jinja2 import Template
 
 parser = configargparse.ArgumentParser(description="Make roadmaps out of github milestones")
-parser.add_argument('--owner', required=True, help='owner', env_var='OWNER')
-parser.add_argument('--repo', required=True, help='github repository', env_var='REPO')
+parser.add_argument('--config', required=True, help='path to config file', env_var='config') #TODO implement
 parser.add_argument('--token', required=True, help='github token that can query repo', env_var='GITHUB_TOKEN')
 options = parser.parse_args()
 
@@ -74,6 +73,9 @@ digraph {
         <TD bgcolor="Turquoise;{{ milestone.issues_open_fraction }}:white"><FONT POINT-SIZE="14.0" COLOR="gray">{{ milestone.id }}   {{ milestone.issues_open }}/{{ milestone.issues_total }}</FONT></TD>
     </TR>
   </TABLE>>];
+    {% for parent in milestone.parents -%}
+    "{{ parent.safe_id }}" -> "{{ milestone.safe_id }}";
+    {% endfor %}
   {% endfor -%}
 {% raw %}
 }
@@ -83,11 +85,16 @@ milestones = dict()
 # regex for parent detection e.g. "/depends org/repo/1"
 parent_rex = re.compile( '^/depends ([\S]+)$', re.MULTILINE)
 
-# safe_div returns 0 if divisor is 0
-def safe_div(x,y):
+# color_div makes fractions that graphviz likes
+def color_div(x,y):
     if y == 0:
-        return 0
-    return x / y
+        return 0 # gradient
+    q = x/y
+    if q > .99:
+        return .99 # 1 turns black
+    if q < .01:
+        return .01
+    return q
 
 def is_open(issue):
     return issue['state'] == 'OPEN'
@@ -100,17 +107,23 @@ def add_milestones(milestones, data, repository):
         id = f"{repository}/{milestone['url'].split('/')[-1]}".lower()
 
         # if description not null, find parents
+        # put a skeleton milestone in the map for each parent if not already there
         parents = []
         if milestone['description'] is not None:
-            parents = parent_rex.findall(milestone['description'])
-            for parent in parents:
-                parent = parent.lower()
-                if parent not in milestones:
-                    milestones[parent] = {'title': "???"}
+            for item in parent_rex.findall(milestone['description']):
+                parent_id = item.lower()
+                parent = {
+                            'title': "???",
+                            'id': parent_id,
+                            'safe_id': parent_id.replace('/', '_'),
+                            }
+                parents.append(parent)
+                if parent_id not in milestones:
+                    milestones[parent_id] = parent
 
         # count open issues
         issue_open_count = sum(map(is_open, milestone['issues']['nodes']))
-        issue_open_fraction = round(safe_div(issue_open_count,issue_count), 2)
+        issue_open_fraction = round(color_div(issue_open_count,issue_count), 2)
         milestones[id] = {
             'id': id,
             'safe_id': id.replace('/', '_'),
@@ -127,15 +140,15 @@ def add_milestones(milestones, data, repository):
 # load map list from yaml
 def get_roadmaps(filename):
     # e.g. 
-#  SRE:
+#  TEAM:
   #  repos:
-    #  - fatmap/aws-dns-zones
-    #  - fatmap/enhancements
+    #  - org/repo1
+    #  - org/repo2
     with open(filename, 'r') as f:
          roadmaps = yaml.safe_load(f).items()
     return roadmaps
 
-for roadmap_name, roadmap in get_roadmaps('roadmaps.yaml'):
+for roadmap_name, roadmap in get_roadmaps(options.config):
     for repo in roadmap.get('repos', []):
         owner,name = repo.split('/')
         # Insert repo and org info into the query.
@@ -143,14 +156,16 @@ for roadmap_name, roadmap in get_roadmaps('roadmaps.yaml'):
         q = q.replace('MYORG', owner)
         q = q.replace('MYREPO', name)
         result = run_query(q)
+
         repository = repo.lower()
         data = result['data']['repository']['milestones']['nodes']
         milestones = add_milestones(milestones, data, repository)
-        #  print(json.dumps(result, indent=4))
 
+        #  print(json.dumps(result, indent=4))
+    # print( json.dumps(milestones, indent=4))
+
+    # render graphviz
     tm = Template(template)
     dot = tm.render(milestones=milestones.values())
     print(roadmap_name)
     print(dot)
-    print( json.dumps(milestones, indent=4))
-

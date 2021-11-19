@@ -5,6 +5,7 @@ SHELL = /bin/bash
 .SUFFIXES:
 
 tag := roadmapper:latest
+config := roadmaps.yaml
 
 .PHONY: all
 all: build run
@@ -17,14 +18,14 @@ build:
 run:
 	docker run -it --rm \
 		-e GITHUB_TOKEN \
-		-v ${PWD}/roadmaps.yaml:/app/roadmaps.yaml \
+		-v ${PWD}/$(config):/app/$(config) \
 		$(tag) \
-		app.py --owner=FATMAP --repo=aws-dns-zones
+		app.py --config=$(config)
 
 .PHONY: bash
 bash:
 	docker run -it --rm \
 		-e GITHUB_TOKEN \
-		-v ${PWD}/roadmaps.yaml:/app/roadmaps.yaml \
+		-v ${PWD}/$(config):/app/$(config) \
 		$(tag) \
 		--entrypoint = /bin/bash
