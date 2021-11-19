@@ -11,7 +11,20 @@ Declare dependencies between milestones by adding the dep to the milestone descr
 
 `/depends org/repo/<number>` - note that milestone # != issue #
 
-Run this script to get a `dot` file
+Run this script to get a `dot` and `svg`
+
+# How to keep roadmaps updated
+
+1. Fork this repo
+1. Update the config.yaml
+1. Let github actions update the repo for you
+  1. You'll need to provide a github PAT with repo scope if you want to read private repositories
+  1. Optionally change when it runs (issue open/close, cron...)
+1. Add the image as a relative link to the README, or whatever other docs you want
+
+# Roadmaps
+
+![Example](output/example.svg)
 
 # Prior Art
 
