@@ -8,24 +8,16 @@ tag := roadmapper:latest
 config := roadmaps.yaml
 
 .PHONY: all
-all: build run
+all: run
 
-.PHONY: build
-build:
-	docker build --tag $(tag) .
+.PHONY: setup
+setup:
+	pip install --user poetry
+
+.PHONY: install
+install:
+	poetry install
 
 .PHONY: run
 run:
-	docker run -it --rm \
-		-e GITHUB_TOKEN \
-		-v ${PWD}/$(config):/app/$(config) \
-		$(tag) \
-		app.py --config=$(config)
-
-.PHONY: bash
-bash:
-	docker run -it --rm \
-		-e GITHUB_TOKEN \
-		-v ${PWD}/$(config):/app/$(config) \
-		$(tag) \
-		--entrypoint = /bin/bash
+	poetry run python src/app.py --config roadmaps.yaml
