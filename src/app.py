@@ -55,17 +55,10 @@ query = """
   }
 }
 """
-# Insert repo and org info into the query.
-query = query.replace('MYREPO', options.repo )
-query = query.replace('MYORG', options.owner )
-
-result = run_query(query) # Execute the query
-print(json.dumps(result, indent=4))
 
 accum = dict()
 # regex for parent detection e.g. "/depends org/repo/1"
 parent_rex = re.compile( '^/depends ([\S]+)$', re.MULTILINE)
-
 
 def add_milestones(accum, milestones):
     for milestone in milestones:
@@ -98,6 +91,16 @@ def add_milestones(accum, milestones):
         }
     return accum
 
-accum = add_milestones(accum, result['data']['repository']['milestones']['nodes'])
+repos = []
+repos.append(dict(owner=options.owner, repo=options.repo))
+# Insert repo and org info into the query.
+for repo in repos:
+    query = query.replace('MYORG', repo['owner'])
+    query = query.replace('MYREPO', repo['repo'])
+    result = run_query(query)
+    milestones = result['data']['repository']['milestones']['nodes']
+    accum = add_milestones(accum, milestones)
+    print(json.dumps(result, indent=4))
+
 print( json.dumps(accum, indent=4))
 
