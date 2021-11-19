@@ -1,12 +1,14 @@
-import requests
-import re
-import simplejson as json
-import configargparse
-import yaml
 from jinja2 import Template
+import configargparse
+import re
+import requests
+import simplejson as json
+import subprocess
+import yaml
 
 parser = configargparse.ArgumentParser(description="Make roadmaps out of github milestones")
-parser.add_argument('--config', required=True, help='path to config file', env_var='config')
+parser.add_argument('--config', required=True, help='path to config file', env_var='CONFIG_FILE')
+parser.add_argument('--outdir', help='folder for output (must exist)', env_var='OUTDIR', default='output')
 parser.add_argument('--token', required=True, help='github token that can query repo', env_var='GITHUB_TOKEN')
 options = parser.parse_args()
 
@@ -81,9 +83,6 @@ digraph {
 }
 {% endraw %}
 """
-milestones = dict()
-# regex for parent detection e.g. "/depends org/repo/1"
-parent_rex = re.compile( '^/depends ([\S]+)$', re.MULTILINE)
 
 # color_div makes fractions that graphviz likes
 def color_div(x,y):
@@ -148,24 +147,46 @@ def get_roadmaps(filename):
          roadmaps = yaml.safe_load(f).items()
     return roadmaps
 
-for roadmap_name, roadmap in get_roadmaps(options.config):
-    for repo in roadmap.get('repos', []):
-        owner,name = repo.split('/')
-        # Insert repo and org info into the query.
-        q = query
-        q = q.replace('MYORG', owner)
-        q = q.replace('MYREPO', name)
-        result = run_query(q)
+def dot_to_svg(dot_file, svg_file):
+    #run dot to svg if possible
+    try:
+        subprocess.run(['dot', '-Tsvg', dot_file, '-o', svg_file])
+        print("wrote svg to {}".format(svg_file))
+    except Exception as e:
+        print("Couldn't run dot: {}".format(e))
+        print("Is graphviz installed?")
+        print(dot)
 
-        repository = repo.lower()
-        data = result['data']['repository']['milestones']['nodes']
-        milestones = add_milestones(milestones, data, repository)
+def main():
+    for roadmap_name, roadmap in get_roadmaps(options.config):
+        milestones = dict()
+        for repo in roadmap.get('repos', []):
+            owner,name = repo.split('/')
+            # Insert repo and org info into the query.
+            q = query
+            q = q.replace('MYORG', owner)
+            q = q.replace('MYREPO', name)
+            result = run_query(q)
 
-        #  print(json.dumps(result, indent=4))
-    # print( json.dumps(milestones, indent=4))
+            repository = repo.lower()
+            data = result['data']['repository']['milestones']['nodes']
+            milestones = add_milestones(milestones, data, repository)
 
-    # render graphviz
-    tm = Template(template)
-    dot = tm.render(milestones=milestones.values())
-    print(roadmap_name)
-    print(dot)
+            #  print(json.dumps(result, indent=4))
+        # print( json.dumps(milestones, indent=4))
+
+        # render graphviz
+        tm = Template(template)
+        dot = tm.render(milestones=milestones.values())
+
+        # write graphviz files
+        dot_file = f"{options.outdir}/{roadmap_name}.dot"
+        svg_file = f"{options.outdir}/{roadmap_name}.svg"
+        open(dot_file, 'w').write(dot)
+        print("wrote dotfile to {}".format(dot_file))
+        dot_to_svg(dot_file, svg_file)
+
+if __name__ == '__main__':
+# regex for parent detection e.g. "/depends org/repo/1"
+    parent_rex = re.compile( '^/depends ([\S]+)$', re.MULTILINE)
+    main()

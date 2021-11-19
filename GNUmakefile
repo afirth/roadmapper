@@ -20,4 +20,4 @@ install:
 
 .PHONY: run
 run:
-	poetry run python src/app.py --config roadmaps.yaml
+	poetry run python src/app.py --config $(config)
