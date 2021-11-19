@@ -1,0 +1,96 @@
+
+digraph {
+  node [shape=plaintext fontsize=16,bgcolor=white,  fillcolor=white, style=filled]
+  edge [length=100, color=gray, fontcolor=black]
+"plan3_stoneboard_1" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/1" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Clean up database design</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.67:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/1   2/3</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_2" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/2" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Analyse query plans</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.67:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/2   2/3</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_3" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/3" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Move to OAuth2</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.5:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/3   1/2</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_4" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/4" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Add support for user roles</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.5:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/4   1/2</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_5" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/5" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Audit log for destructive actions</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.99:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/5   2/2</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_6" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/6" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Use SLF4J for all logging</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.99:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/6   2/2</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_7" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/7" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Archive logs on S3</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.5:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/7   2/4</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_8" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/8" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Administrator UI screen</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/8   0/0</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  "plan3_stoneboard_9" [label=<
+ <TABLE HREF="https://github.com/plan3/stoneboard/milestone/9" BORDER="1" cellspacing="0" cellborder="0">
+    <TR>
+        <TD>Administrator UX</TD>
+    </TR>
+    <TR>
+        <TD bgcolor="Turquoise;0.99:white"><FONT POINT-SIZE="14.0" COLOR="gray">plan3/stoneboard/9   2/2</FONT></TD>
+    </TR>
+  </TABLE>>];
+    
+  
+}
