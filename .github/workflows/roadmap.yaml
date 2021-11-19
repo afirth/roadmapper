@@ -51,6 +51,11 @@ jobs:
           source .venv/bin/activate
           make run
 
+      # install graphviz
+      - name: Install graphviz
+        run: |
+          sudo apt-get install graphviz
+
       # commit back to master
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
