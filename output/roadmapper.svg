@@ -17,12 +17,12 @@
 <text text-anchor="start" x="151.5" y="-204.7" font-family="Times,serif" font-size="16.00">Foo</text>
 <defs>
 <linearGradient id="l_0" gradientUnits="userSpaceOnUse" x1="74.5" y1="-188" x2="259.5" y2="-188" >
-<stop offset="0.989" style="stop-color:Turquoise;stop-opacity:1.;"/>
-<stop offset="0.990" style="stop-color:white;stop-opacity:1.;"/>
+<stop offset="0.499" style="stop-color:Turquoise;stop-opacity:1.;"/>
+<stop offset="0.500" style="stop-color:white;stop-opacity:1.;"/>
 </linearGradient>
 </defs>
 <polygon fill="url(#l_0)" stroke="transparent" points="74.5,-178.5 74.5,-197.5 259.5,-197.5 259.5,-178.5 74.5,-178.5"/>
-<text text-anchor="start" x="76.5" y="-184.3" font-family="Times,serif" font-size="14.00" fill="gray">afirth/roadmapper/1 &#160;&#160;2/2</text>
+<text text-anchor="start" x="76.5" y="-184.3" font-family="Times,serif" font-size="14.00" fill="gray">afirth/roadmapper/1 &#160;&#160;1/2</text>
 <polygon fill="none" stroke="black" points="73,-178 73,-221 260,-221 260,-178 73,-178"/>
 </a>
 </g>
