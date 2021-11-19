@@ -23,8 +23,12 @@ Run this script to get a `dot` and `svg`
 1. Add the image as a relative link to the README, or whatever other docs you want
 
 # Roadmaps
-
-![Example](output/example.svg)
+## Roadmapper
+> This repo
+![roadmapper](output/roadmapper.svg)
+## Stoneboard
+> Has a different structure for noting dependencies, therefore no lines
+![Stoneboard](output/stoneboard.svg)
 
 # Prior Art
 
